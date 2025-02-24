@@ -386,6 +386,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "mockito",
+      "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/mockito-5.4.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "nested",
       "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/nested-1.0.0",
       "packageUri": "lib/",
@@ -590,7 +596,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2025-02-24T01:34:32.126391Z",
+  "generated": "2025-02-24T14:17:35.887419Z",
   "generator": "pub",
   "generatorVersion": "3.6.1",
   "flutterRoot": "file:///C:/flutter",
