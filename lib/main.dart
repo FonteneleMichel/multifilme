@@ -7,9 +7,11 @@ import 'data/repositories/movie_repository.dart';
 import 'core/network/dio_client.dart';
 import 'core/localization/app_localizations.dart';
 import 'core/localization/language_provider.dart';
+import 'core/theme/theme.dart';
 import 'presentation/bloc/movie_bloc.dart';
 import 'presentation/bloc/movie_event.dart';
 import 'presentation/pages/movie_list_page.dart';
+import 'presentation/widgets/background_container.dart';
 
 void main() {
   final dio = DioClient.createDio();
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             title: 'Filmes Populares',
             debugShowCheckedModeBanner: false,
+            theme: AppTheme.theme, // 🔥 Aplicando o tema global
             supportedLocales: const [
               Locale('en', 'US'),
               Locale('pt', 'BR'),
@@ -51,16 +54,9 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            localeResolutionCallback: (locale, supportedLocales) {
-              if (locale == null) return const Locale('en', 'US');
-              for (var supportedLocale in supportedLocales) {
-                if (supportedLocale.languageCode == locale.languageCode) {
-                  return supportedLocale;
-                }
-              }
-              return const Locale('en', 'US');
-            },
-            home: const MovieListPage(),
+            home: BackgroundContainer(
+              child: const MovieListPage(),
+            ),
           ),
         );
       },

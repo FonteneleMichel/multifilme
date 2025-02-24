@@ -10,15 +10,14 @@ class LanguageSelector extends StatelessWidget {
     final languageProvider = Provider.of<LanguageProvider>(context);
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween, // 🔥 Distribui os elementos igualmente
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Seção do seletor de idioma
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Idioma", // 🔥 Label do idioma
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              "Idioma",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white), // 🔥 Texto branco
             ),
             const SizedBox(height: 4),
             Row(
@@ -27,16 +26,17 @@ class LanguageSelector extends StatelessWidget {
                 const SizedBox(width: 8),
                 DropdownButton<Locale>(
                   value: languageProvider.locale,
+                  dropdownColor: Colors.black, // 🔥 Define fundo preto para o dropdown
                   underline: Container(),
-                  icon: const Icon(Icons.keyboard_arrow_down),
+                  icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white), // 🔥 Ícone da seta branca
                   items: const [
                     DropdownMenuItem(
                       value: Locale('en', 'US'),
-                      child: Text('English'),
+                      child: Text('English', style: TextStyle(color: Colors.white)), // 🔥 Texto branco
                     ),
                     DropdownMenuItem(
                       value: Locale('pt', 'BR'),
-                      child: Text('Português'),
+                      child: Text('Português', style: TextStyle(color: Colors.white)), // 🔥 Texto branco
                     ),
                   ],
                   onChanged: (Locale? newValue) {
@@ -49,11 +49,9 @@ class LanguageSelector extends StatelessWidget {
             ),
           ],
         ),
-
-        // Ícone de perfil do usuário
         const CircleAvatar(
           radius: 20,
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.transparent,
           child: Icon(Icons.person, color: Colors.white),
         ),
       ],
