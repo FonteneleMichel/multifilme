@@ -8,8 +8,10 @@ import 'core/network/dio_client.dart';
 import 'core/localization/app_localizations.dart';
 import 'core/localization/language_provider.dart';
 import 'core/theme/theme.dart';
-import 'presentation/bloc/movie_bloc.dart';
-import 'presentation/bloc/movie_event.dart';
+import 'presentation/bloc/movie/movie_bloc.dart';
+import 'presentation/bloc/movie/movie_event.dart' as movie_events;
+import 'presentation/bloc/rated/top_rated_bloc.dart';
+import 'presentation/bloc/rated/top_rated_event.dart' as rated_events;
 import 'presentation/pages/movie_list_page.dart';
 import 'presentation/widgets/background_container.dart';
 
@@ -35,10 +37,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, child) {
-        return BlocProvider(
-          create: (_) => MovieBloc(repository)
-            ..add(FetchPopularMovies(1))
-            ..add(FetchTopRatedMovies()),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => MovieBloc(repository)..add(movie_events.FetchPopularMovies(1)),
+            ),
+            BlocProvider(
+              create: (_) => TopRatedBloc(repository)..add(rated_events.FetchTopRatedMovies()),
+            ),
+          ],
           child: MaterialApp(
             title: 'Filmes Populares',
             debugShowCheckedModeBanner: false,

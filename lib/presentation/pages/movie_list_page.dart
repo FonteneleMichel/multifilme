@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:multifilme/presentation/bloc/movie/movie_bloc.dart';
+import 'package:multifilme/presentation/bloc/movie/movie_state.dart';
+import 'package:multifilme/presentation/bloc/rated/top_rated_bloc.dart';
+import 'package:multifilme/presentation/bloc/rated/top_rated_state.dart';
 import '../../core/localization/app_localizations.dart';
-import '../bloc/movie_bloc.dart';
-import '../bloc/movie_event.dart';
-import '../bloc/movie_state.dart';
 import '../widgets/language_selector.dart';
 
 class MovieListPage extends StatefulWidget {
@@ -20,7 +21,6 @@ class _MovieListPageState extends State<MovieListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context).translate("app_title"))),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,9 +28,11 @@ class _MovieListPageState extends State<MovieListPage> {
             padding: EdgeInsets.all(16.0),
             child: LanguageSelector(),
           ),
-          BlocBuilder<MovieBloc, MovieState>(
+
+          // 🔥 Carrossel usando o novo Bloc
+          BlocBuilder<TopRatedBloc, TopRatedState>(
             builder: (context, state) {
-              if (state is TopRatedMoviesLoaded) {
+              if (state is TopRatedLoaded) {
                 return Column(
                   children: [
                     CarouselSlider(
@@ -45,7 +47,7 @@ class _MovieListPageState extends State<MovieListPage> {
                           });
                         },
                       ),
-                      items: state.topRatedMovies.map((movie) {
+                      items: state.movies.map((movie) {
                         return Builder(
                           builder: (context) {
                             return Container(
@@ -65,28 +67,31 @@ class _MovieListPageState extends State<MovieListPage> {
                       }).toList(),
                     ),
 
+                    // 🔥 Indicadores do carrossel
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(state.topRatedMovies.length, (index) {
+                      children: List.generate(state.movies.length, (index) {
                         return Container(
-                          width: 6,
-                          height: 6,
+                          width: 10,
+                          height: 10,
                           margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: _currentIndex == index ? Colors.purple : Colors.grey,
+                            color: _currentIndex == index ? Colors.red : Colors.grey,
                           ),
                         );
                       }),
                     ),
                   ],
                 );
-              } else if (state is MovieError) {
-                return Center(child: Text(state.message));
+              } else if (state is TopRatedError) {
+                return Center(child: Text(state.message, style: const TextStyle(color: Colors.white)));
               }
               return const Center(child: CircularProgressIndicator());
             },
           ),
+
+          // 🔥 Lista de filmes usando o MovieBloc
           Expanded(
             child: BlocBuilder<MovieBloc, MovieState>(
               builder: (context, state) {
@@ -104,15 +109,15 @@ class _MovieListPageState extends State<MovieListPage> {
                           height: 75,
                           fit: BoxFit.cover,
                         ),
-                        title: Text(movie.title),
-                        subtitle: Text(movie.releaseDate ?? ''),
+                        title: Text(movie.title, style: Theme.of(context).textTheme.bodyLarge),
+                        subtitle: Text(movie.releaseDate ?? '', style: Theme.of(context).textTheme.bodyMedium),
                       );
                     },
                   );
                 } else if (state is MovieError) {
-                  return Center(child: Text(AppLocalizations.of(context).translate("error_loading_movies")));
+                  return Center(child: Text(state.message, style: const TextStyle(color: Colors.white)));
                 }
-                return const Center(child: Text("Nenhum filme encontrado"));
+                return const Center(child: Text("Nenhum filme encontrado", style: TextStyle(color: Colors.white)));
               },
             ),
           ),
