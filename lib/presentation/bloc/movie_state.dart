@@ -15,3 +15,7 @@ class MovieError extends MovieState {
 
   MovieError(this.message);
 }
+class TopRatedMoviesLoaded extends MovieState {
+  final List<Movie> topRatedMovies;
+  TopRatedMoviesLoaded(this.topRatedMovies);
+}

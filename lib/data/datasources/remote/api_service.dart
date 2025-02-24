@@ -18,4 +18,9 @@ abstract class ApiService {
       @Query("include_adult") bool includeAdult,
       @Query("include_video") bool includeVideo,
       );
+  @GET("/movie/top_rated")
+  Future<MovieResponse> getTopRatedMovies(
+      @Query("language") String language,
+      @Query("page") int page,
+      );
 }
