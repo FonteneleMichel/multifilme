@@ -92,6 +92,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "carousel_slider",
+      "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/carousel_slider-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "characters",
       "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.4.0",
       "packageUri": "lib/",
@@ -614,7 +620,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2025-02-24T18:33:00.128390Z",
+  "generated": "2025-02-24T18:54:31.028911Z",
   "generator": "pub",
   "generatorVersion": "3.7.0",
   "flutterRoot": "file:///C:/flutter",

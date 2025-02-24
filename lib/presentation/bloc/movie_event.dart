@@ -5,3 +5,6 @@ class FetchPopularMovies extends MovieEvent {
 
   FetchPopularMovies(this.page);
 }
+
+class FetchTopRatedMovies extends MovieEvent {}
+
