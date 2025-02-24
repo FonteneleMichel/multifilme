@@ -1,39 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'data/datasources/remote/api_service.dart';
+import 'data/repositories/movie_repository.dart';
 import 'core/network/dio_client.dart';
-import 'core/network/api_config.dart';
+import 'presentation/bloc/movie_bloc.dart';
+import 'presentation/bloc/movie_event.dart';
+import 'presentation/pages/movie_list_page.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
+void main() {
   final dio = DioClient.createDio();
   final apiService = ApiService(dio);
+  final repository = MovieRepository(apiService);
 
-  final popularMovies = await apiService.getPopularMovies(
-    ApiConfig.apiKey,
-    ApiConfig.language,
-    1, // Página 1
-    "popularity.desc",
-    false,
-    false,
-  );
-
-  print(popularMovies.results.map((movie) => movie.title).toList()); // Verifica no console
-
-  runApp(const MyApp());
+  runApp(MyApp(repository: repository));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final MovieRepository repository;
+
+  const MyApp({Key? key, required this.repository}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text("Verifique os logs do console!"),
-        ),
+    return BlocProvider(
+      create: (_) => MovieBloc(repository)..add(FetchPopularMovies(1)),
+      child: MaterialApp(
+        title: 'Filmes Populares',
+        home: MovieListPage(),
       ),
     );
   }

@@ -21,70 +21,7 @@ class _ApiService implements ApiService {
   String? baseUrl;
 
   @override
-  Future<MovieResponse> getNowPlayingMovies(
-    apiKey,
-    language,
-    page,
-  ) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'api_key': apiKey,
-      r'language': language,
-      r'page': page,
-    };
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<MovieResponse>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/movie/now_playing',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = MovieResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<MovieResponse> getUpcomingMovies(
-    apiKey,
-    language,
-    page,
-  ) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'api_key': apiKey,
-      r'language': language,
-      r'page': page,
-    };
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<MovieResponse>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/movie/upcoming',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = MovieResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
   Future<MovieResponse> getPopularMovies(
-    apiKey,
     language,
     page,
     sortBy,
@@ -93,7 +30,6 @@ class _ApiService implements ApiService {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'api_key': apiKey,
       r'language': language,
       r'page': page,
       r'sort_by': sortBy,

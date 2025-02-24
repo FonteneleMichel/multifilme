@@ -11,6 +11,8 @@ class MovieModel {
   final String? posterPath;
   @JsonKey(name: "release_date")
   final String? releaseDate;
+  @JsonKey(name: "vote_average")
+  final double voteAverage;
 
   MovieModel({
     required this.id,
@@ -18,6 +20,7 @@ class MovieModel {
     required this.overview,
     this.posterPath,
     this.releaseDate,
+    required this.voteAverage,
   });
 
   factory MovieModel.fromJson(Map<String, dynamic> json) => _$MovieModelFromJson(json);
