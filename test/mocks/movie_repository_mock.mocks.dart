@@ -62,4 +62,15 @@ class MockMovieRepository extends _i1.Mock implements _i3.MovieRepository {
         returnValueForMissingStub:
             _i4.Future<List<_i5.Movie>>.value(<_i5.Movie>[]),
       ) as _i4.Future<List<_i5.Movie>>);
+
+  @override
+  _i4.Future<List<_i5.Movie>> getTopRatedMovies() => (super.noSuchMethod(
+        Invocation.method(
+          #getTopRatedMovies,
+          [],
+        ),
+        returnValue: _i4.Future<List<_i5.Movie>>.value(<_i5.Movie>[]),
+        returnValueForMissingStub:
+            _i4.Future<List<_i5.Movie>>.value(<_i5.Movie>[]),
+      ) as _i4.Future<List<_i5.Movie>>);
 }

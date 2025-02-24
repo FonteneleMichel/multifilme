@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mockito/mockito.dart';
 import 'package:multifilme/main.dart';
-import 'package:multifilme/presentation/bloc/movie_bloc.dart';
+import 'package:multifilme/presentation/bloc/movie/movie_bloc.dart';
 import 'mocks/movie_repository_mock.mocks.dart';
 
 void main() {
