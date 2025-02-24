@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import '../../models/movie_model.dart';
 import '../../../core/network/api_config.dart';

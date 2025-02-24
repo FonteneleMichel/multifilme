@@ -1,30 +1,29 @@
-// // This is a basic Flutter widget test.
-// //
-// // To perform an interaction with a widget in your test, use the WidgetTester
-// // utility in the flutter_test package. For example, you can send tap and scroll
-// // gestures. You can also use WidgetTester to find child widgets in the widget
-// // tree, read text, and verify that the values of widget properties are correct.
-//
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-//
-// import 'package:multifilme/main.dart';
-//
-// void main() {
-//   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-//     // Build our app and trigger a frame.
-//     await tester.pumpWidget(const MyApp());
-//
-//     // Verify that our counter starts at 0.
-//     expect(find.text('0'), findsOneWidget);
-//     expect(find.text('1'), findsNothing);
-//
-//     // Tap the '+' icon and trigger a frame.
-//     await tester.tap(find.byIcon(Icons.add));
-//     await tester.pump();
-//
-//     // Verify that our counter has incremented.
-//     expect(find.text('0'), findsNothing);
-//     expect(find.text('1'), findsOneWidget);
-//   });
-// }
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mockito/mockito.dart';
+import 'package:multifilme/main.dart';
+import 'package:multifilme/presentation/bloc/movie_bloc.dart';
+import 'mocks/movie_repository_mock.mocks.dart';
+
+void main() {
+  late MockMovieRepository mockRepository;
+
+  setUp(() {
+    mockRepository = MockMovieRepository();
+  });
+
+  testWidgets('Deve carregar a tela principal', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      BlocProvider(
+        create: (_) => MovieBloc(mockRepository),
+        child: MaterialApp(
+          home: MyApp(repository: mockRepository), // ✅ Passando o Mock aqui
+        ),
+      ),
+    );
+
+    // Verifica se a tela inicial do app é carregada
+    expect(find.byType(MyApp), findsOneWidget);
+  });
+}
