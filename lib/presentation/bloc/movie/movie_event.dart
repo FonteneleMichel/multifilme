@@ -5,7 +5,7 @@ abstract class MovieEvent extends Equatable {
 }
 
 class FetchNowPlayingMovies extends MovieEvent {
-  final String language; // Agora recebe o idioma como String
+  final String language;
 
   const FetchNowPlayingMovies(this.language);
 
@@ -14,7 +14,7 @@ class FetchNowPlayingMovies extends MovieEvent {
 }
 
 class FetchUpcomingMovies extends MovieEvent {
-  final String language; // Agora recebe o idioma como String
+  final String language;
 
   const FetchUpcomingMovies(this.language);
 
@@ -23,7 +23,7 @@ class FetchUpcomingMovies extends MovieEvent {
 }
 
 class FetchPopularMovies extends MovieEvent {
-  final String language; // Agora recebe o idioma como String
+  final String language;
 
   const FetchPopularMovies(this.language);
 

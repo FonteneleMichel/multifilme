@@ -231,7 +231,7 @@ class MovieDetailPage extends StatelessWidget {
                                       ),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        localizations.translate("official_page"), // 🔥 Agora traduz corretamente
+                                        localizations.translate("official_page"),
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,

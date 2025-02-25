@@ -10,8 +10,8 @@ import '../mocks/movie_repository_mock.mocks.dart';
 void main() {
   late MockMovieRepository mockRepository;
   late MovieBloc movieBloc;
-  const String language = "pt-BR"; // Definição do idioma fixo para os testes
-  const int page = 1; // Definição da página para os testes
+  const String language = "pt-BR";
+  const int page = 1;
 
   setUp(() {
     mockRepository = MockMovieRepository();

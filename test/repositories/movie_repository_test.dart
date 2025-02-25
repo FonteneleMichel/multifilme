@@ -5,8 +5,8 @@ import '../mocks/movie_repository_mock.mocks.dart';
 
 void main() {
   late MockMovieRepository mockRepository;
-  const String language = "pt-BR"; // ✅ Define um idioma padrão para o teste
-  const int page = 1; // ✅ Define um número de página fixo para o teste
+  const String language = "pt-BR";
+  const int page = 1;
 
   setUp(() {
     mockRepository = MockMovieRepository();

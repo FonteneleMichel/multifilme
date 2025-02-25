@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:multifilme/core/localization/language_provider.dart';
 import 'package:multifilme/presentation/bloc/rated/top_rated_bloc.dart';
 import 'package:multifilme/presentation/bloc/rated/top_rated_state.dart';
-import '../../core/localization/app_localizations.dart';
 import '../bloc/movie/movie_bloc.dart';
 import '../bloc/movie/movie_event.dart';
 import '../bloc/movie/movie_state.dart';
@@ -50,7 +49,6 @@ class _MovieListPageState extends State<MovieListPage> {
             child: LanguageSelector(),
           ),
 
-          // 🔥 Carrossel dos melhores avaliados
           BlocBuilder<TopRatedBloc, TopRatedState>(
             builder: (context, state) {
               if (state is TopRatedLoaded) {
@@ -118,7 +116,6 @@ class _MovieListPageState extends State<MovieListPage> {
             },
           ),
 
-          // 🔥 Botões de Categoria
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
             child: Row(
@@ -131,7 +128,6 @@ class _MovieListPageState extends State<MovieListPage> {
             ),
           ),
 
-          // 🔥 Lista de Filmes
           Expanded(
             child: BlocBuilder<MovieBloc, MovieState>(
               builder: (context, state) {
@@ -232,7 +228,6 @@ class _MovieListPageState extends State<MovieListPage> {
     );
   }
 
-  // 🔥 Método para Criar Botões de Categoria
   Widget _buildCategoryButton(BuildContext context, String title, MovieEvent event) {
     return SizedBox(
       width: 110,
