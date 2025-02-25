@@ -106,7 +106,6 @@ class _MovieListPageState extends State<MovieListPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // 🔥 Botão "Nos Cinemas"
                 SizedBox(
                   width: 110,
                   height: 37,
@@ -118,13 +117,13 @@ class _MovieListPageState extends State<MovieListPage> {
                       context.read<MovieBloc>().add(FetchNowPlayingMovies());
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero, // 🔥 Remove o padding interno
+                      padding: EdgeInsets.zero,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),
                       elevation: 0,
                       backgroundColor: Colors
-                          .transparent, // 🔥 Transparente para usar gradiente no Container
+                          .transparent,
                     ),
                     child: Ink(
                       decoration: BoxDecoration(
@@ -135,7 +134,7 @@ class _MovieListPageState extends State<MovieListPage> {
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
                               )
-                            : null, // 🔥 Apenas o botão ativo recebe gradiente
+                            : null,
                       ),
                       child: Container(
                         alignment: Alignment.center,
@@ -154,9 +153,9 @@ class _MovieListPageState extends State<MovieListPage> {
                   ),
                 ),
 
-                const SizedBox(width: 4), // 🔥 Espaçamento entre botões
+                const SizedBox(width: 4),
 
-                // 🔥 Botão "Em Breve"
+
                 SizedBox(
                   width: 110,
                   height: 37,
@@ -168,13 +167,13 @@ class _MovieListPageState extends State<MovieListPage> {
                       context.read<MovieBloc>().add(FetchUpcomingMovies());
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero, // 🔥 Remove o padding interno
+                      padding: EdgeInsets.zero,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),
                       elevation: 0,
                       backgroundColor: Colors
-                          .transparent, // 🔥 Transparente para usar gradiente no Container
+                          .transparent,
                     ),
                     child: Ink(
                       decoration: BoxDecoration(
@@ -185,7 +184,7 @@ class _MovieListPageState extends State<MovieListPage> {
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
                               )
-                            : null, // 🔥 Apenas o botão ativo recebe gradiente
+                            : null,
                       ),
                       child: Container(
                         alignment: Alignment.center,

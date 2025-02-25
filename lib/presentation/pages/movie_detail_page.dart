@@ -26,7 +26,6 @@ class MovieDetailPage extends StatelessWidget {
         ),
         body: Stack(
           children: [
-            // 🔥 Imagem de Fundo cobrindo toda a tela
             Positioned.fill(
               child: Image.asset(
                 "assets/image/background.jpg",
@@ -45,7 +44,6 @@ class MovieDetailPage extends StatelessWidget {
 
                   return Column(
                     children: [
-                      // 🔥 Ajustamos o tamanho do player para 45% da tela
                       if (hasTrailer)
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.45,
@@ -77,7 +75,6 @@ class MovieDetailPage extends StatelessWidget {
                           ),
                         ),
 
-                      // 🔥 Ajustamos o container para ocupar o espaço restante (55%)
                       Expanded(
                         child: Stack(
                           children: [
@@ -91,7 +88,7 @@ class MovieDetailPage extends StatelessWidget {
                                     left: 16,
                                     right: 16,
                                     top: 16,
-                                    bottom: 100, // 🔥 Garante espaço para o botão fixo
+                                    bottom: 100,
                                   ),
                                   child: SingleChildScrollView(
                                     child: Column(
@@ -150,7 +147,6 @@ class MovieDetailPage extends StatelessWidget {
                               ),
                             ),
 
-                            // 🔥 Botão fixo na parte inferior da tela
                             Positioned(
                               bottom: 64,
                               left: 16,

@@ -24,7 +24,6 @@ class LanguageSelector extends StatelessWidget {
             ),
             Row(
               children: [
-                // 🔥 Ícone de localização personalizado
                 Image.asset(
                   'assets/icon/location.png',
                   width: 18,
