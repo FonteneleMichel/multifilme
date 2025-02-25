@@ -9,7 +9,7 @@ class TopRatedBloc extends Bloc<TopRatedEvent, TopRatedState> {
   TopRatedBloc(this.repository) : super(TopRatedLoading()) {
     on<FetchTopRatedMovies>((event, emit) async {
       try {
-        final movies = await repository.getTopRatedMovies();
+        final movies = await repository.getTopRatedMovies(event.language);
         emit(TopRatedLoaded(movies));
       } catch (e) {
         emit(TopRatedError("Erro ao carregar os melhores avaliados"));

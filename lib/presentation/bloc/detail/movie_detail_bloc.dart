@@ -9,7 +9,7 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
   MovieDetailBloc(this.repository) : super(MovieDetailLoading()) {
     on<FetchMovieDetail>((event, emit) async {
       try {
-        final movie = await repository.getMovieDetails(event.movieId);
+        final movie = await repository.getMovieDetails(event.movieId, event.language);
         emit(MovieDetailLoaded(movie));
       } catch (e) {
         emit(MovieDetailError("Erro ao carregar detalhes do filme"));

@@ -1,10 +1,14 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:multifilme/core/localization/app_localizations.dart';
 import 'package:multifilme/data/repositories/movie_repository.dart';
 import 'package:multifilme/presentation/bloc/detail/movie_detail_bloc.dart';
 import 'package:multifilme/presentation/bloc/detail/movie_detail_event.dart';
 import 'package:multifilme/presentation/bloc/detail/movie_detail_state.dart';
+import 'package:provider/provider.dart';
+import 'package:multifilme/core/localization/language_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -14,10 +18,22 @@ class MovieDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final movieId = ModalRoute.of(context)!.settings.arguments as int;
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    final currentLanguage = languageProvider.locale.languageCode;
+    final localizations = AppLocalizations.of(context);
+
+    String _formatDate(String date) {
+      try {
+        DateTime parsedDate = DateTime.parse(date);
+        return DateFormat("dd 'de' MMMM 'de' yyyy", currentLanguage).format(parsedDate);
+      } catch (e) {
+        return localizations!.translate("unknown_date");
+      }
+    }
 
     return BlocProvider(
       create: (context) => MovieDetailBloc(context.read<MovieRepository>())
-        ..add(FetchMovieDetail(movieId)),
+        ..add(FetchMovieDetail(movieId, currentLanguage)),
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -65,12 +81,12 @@ class MovieDetailPage extends StatelessWidget {
                           ),
                         )
                       else
-                        const Padding(
-                          padding: EdgeInsets.all(16.0),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
                           child: Center(
                             child: Text(
-                              "Trailer não disponível",
-                              style: TextStyle(color: Colors.white, fontSize: 16),
+                              localizations!.translate("trailer_not_available"),
+                              style: const TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ),
                         ),
@@ -79,8 +95,12 @@ class MovieDetailPage extends StatelessWidget {
                         child: Stack(
                           children: [
                             ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(24),
+                                topRight: Radius.circular(24),
+                              ),
                               child: BackdropFilter(
-                                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
                                 child: Container(
                                   width: double.infinity,
                                   color: Colors.black.withOpacity(0.0),
@@ -91,54 +111,82 @@ class MovieDetailPage extends StatelessWidget {
                                     bottom: 100,
                                   ),
                                   child: SingleChildScrollView(
+                                    padding: const EdgeInsets.only(bottom: 72),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           movie.title,
                                           style: const TextStyle(
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                         Text(
                                           movie.originalTitle,
-                                          style: const TextStyle(fontSize: 18, color: Colors.grey),
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey,
+                                            fontStyle: FontStyle.italic,
+                                          ),
                                         ),
-                                        const SizedBox(height: 8),
+                                        const SizedBox(height: 12),
 
-                                        Text("Ano: ${movie.releaseDate.split('-')[0]}",
-                                            style: const TextStyle(color: Colors.white)),
+                                        Text(
+                                          "${localizations!.translate("year")}: ${movie.releaseDate.split('-')[0]}",
+                                          style: const TextStyle(color: Colors.white),
+                                        ),
 
                                         Row(
                                           children: [
-                                            const Icon(Icons.star, color: Colors.amber, size: 16),
-                                            const SizedBox(width: 4),
+                                            const Icon(Icons.star, color: Colors.amber, size: 20),
+                                            const SizedBox(width: 6),
                                             Text(
-                                              "${movie.voteAverage.toStringAsFixed(1)} - ${movie.voteCount} votos",
-                                              style: const TextStyle(color: Colors.white),
+                                              "${movie.voteAverage.toStringAsFixed(1)} • ${movie.voteCount} ${localizations.translate("votes")}",
+                                              style: const TextStyle(color: Colors.white, fontSize: 16),
                                             ),
                                           ],
                                         ),
+                                        const SizedBox(height: 12),
 
-                                        const SizedBox(height: 8),
-                                        Text("Gêneros: ${movie.genres.join(', ')}",
-                                            style: const TextStyle(color: Colors.white)),
-
-                                        const SizedBox(height: 8),
-                                        Text("Resumo:",
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold, color: Colors.white)),
-                                        Text(movie.overview, style: const TextStyle(color: Colors.white)),
-
-                                        const SizedBox(height: 8),
-                                        Text("Lançamento: ${movie.releaseDate}",
-                                            style: const TextStyle(color: Colors.white)),
-                                        Text("Origem: ${movie.productionCountries.join(', ')}",
-                                            style: const TextStyle(color: Colors.white)),
                                         Text(
-                                          "Orçamento: \$${movie.budget?.toString() ?? 'Desconhecido'}",
-                                          style: const TextStyle(color: Colors.white),
+                                          "${localizations.translate("genres")}: ${movie.genres.join(', ')}",
+                                          style: const TextStyle(color: Colors.white, fontSize: 16),
+                                        ),
+                                        const SizedBox(height: 12),
+
+                                        Text(
+                                          localizations.translate("summary"),
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          movie.overview,
+                                          textAlign: TextAlign.justify,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 12),
+
+                                        Text(
+                                          "${localizations.translate("release_date")}: ${_formatDate(movie.releaseDate)}",
+                                          style: const TextStyle(color: Colors.white, fontSize: 16),
+                                        ),
+                                        Text(
+                                          "${localizations.translate("origin")}: ${movie.productionCountries.join(', ')}",
+                                          style: const TextStyle(color: Colors.white, fontSize: 16),
+                                        ),
+                                        Text(
+                                          "${localizations.translate("budget")}: \$${movie.budget?.toString() ?? localizations.translate("unknown_budget")}",
+                                          style: const TextStyle(color: Colors.white, fontSize: 16),
                                         ),
                                       ],
                                     ),
@@ -151,17 +199,9 @@ class MovieDetailPage extends StatelessWidget {
                               bottom: 64,
                               left: 16,
                               right: 16,
-                              child: Container(
+                              child: SizedBox(
                                 width: 343,
                                 height: 52,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  gradient: const LinearGradient(
-                                    colors: [Color(0xFF0E9FF3), Color(0xFF094B96)],
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                  ),
-                                ),
                                 child: ElevatedButton(
                                   onPressed: () async {
                                     final url = Uri.parse("https://www.themoviedb.org/movie/${movie.id}");
@@ -170,18 +210,34 @@ class MovieDetailPage extends StatelessWidget {
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.transparent,
-                                    shadowColor: Colors.transparent,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
+                                    padding: EdgeInsets.zero,
                                   ),
-                                  child: const Text(
-                                    "Página Oficial",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                        colors: [Color(0xFF0E9FF3), Color(0xFF094B96)],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Container(
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 400,
+                                        minHeight: 52,
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        localizations.translate("official_page"), // 🔥 Agora traduz corretamente
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -193,8 +249,11 @@ class MovieDetailPage extends StatelessWidget {
                     ],
                   );
                 }
-                return const Center(
-                  child: Text("Erro ao carregar detalhes", style: TextStyle(color: Colors.white)),
+                return Center(
+                  child: Text(
+                    localizations!.translate("error_loading"),
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 );
               },
             ),
