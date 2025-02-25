@@ -13,6 +13,8 @@ class MovieModel {
   final String? releaseDate;
   @JsonKey(name: "vote_average")
   final double voteAverage;
+  @JsonKey(name: "vote_count")
+  final int voteCount;
 
   MovieModel({
     required this.id,
@@ -21,18 +23,8 @@ class MovieModel {
     this.posterPath,
     this.releaseDate,
     required this.voteAverage,
+    required this.voteCount,
   });
 
   factory MovieModel.fromJson(Map<String, dynamic> json) => _$MovieModelFromJson(json);
-  Map<String, dynamic> toJson() => _$MovieModelToJson(this);
-}
-
-@JsonSerializable()
-class MovieResponse {
-  final List<MovieModel> results;
-
-  MovieResponse({required this.results});
-
-  factory MovieResponse.fromJson(Map<String, dynamic> json) => _$MovieResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$MovieResponseToJson(this);
 }

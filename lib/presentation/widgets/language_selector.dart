@@ -17,7 +17,7 @@ class LanguageSelector extends StatelessWidget {
           children: [
             const Text(
               "Idioma",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white), // 🔥 Texto branco
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 4),
             Row(
@@ -26,17 +26,17 @@ class LanguageSelector extends StatelessWidget {
                 const SizedBox(width: 8),
                 DropdownButton<Locale>(
                   value: languageProvider.locale,
-                  dropdownColor: Colors.black, // 🔥 Define fundo preto para o dropdown
+                  dropdownColor: Colors.black,
                   underline: Container(),
-                  icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white), // 🔥 Ícone da seta branca
+                  icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
                   items: const [
                     DropdownMenuItem(
                       value: Locale('en', 'US'),
-                      child: Text('English', style: TextStyle(color: Colors.white)), // 🔥 Texto branco
+                      child: Text('English', style: TextStyle(color: Colors.white)),
                     ),
                     DropdownMenuItem(
                       value: Locale('pt', 'BR'),
-                      child: Text('Português', style: TextStyle(color: Colors.white)), // 🔥 Texto branco
+                      child: Text('Português', style: TextStyle(color: Colors.white)),
                     ),
                   ],
                   onChanged: (Locale? newValue) {

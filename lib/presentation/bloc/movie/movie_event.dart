@@ -8,3 +8,7 @@ class FetchPopularMovies extends MovieEvent {
 
 class FetchTopRatedMovies extends MovieEvent {}
 
+class FetchNowPlayingMovies extends MovieEvent {}
+
+class FetchUpcomingMovies extends MovieEvent {}
+

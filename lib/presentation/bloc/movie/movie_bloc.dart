@@ -9,21 +9,31 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
 
   MovieBloc(this.repository) : super(MovieLoading()) {
     on<FetchPopularMovies>((event, emit) async {
-      emit(MovieLoading());
       try {
         final movies = await repository.getPopularMovies(event.page);
         emit(MovieLoaded(movies));
       } catch (e) {
-        emit(MovieError("Erro ao carregar filmes: $e"));
+        emit(MovieError("Erro ao carregar filmes populares"));
       }
     });
-    on<FetchTopRatedMovies>((event, emit) async {
+
+    on<FetchNowPlayingMovies>((event, emit) async {
       try {
-        final topMovies = await repository.getTopRatedMovies();
-        emit(TopRatedMoviesLoaded(topMovies));
+        final movies = await repository.getNowPlayingMovies();
+        emit(MovieLoaded(movies));
       } catch (e) {
-        emit(MovieError("Erro ao carregar os melhores avaliados"));
+        emit(MovieError("Erro ao carregar filmes nos cinemas"));
+      }
+    });
+
+    on<FetchUpcomingMovies>((event, emit) async {
+      try {
+        final movies = await repository.getUpcomingMovies();
+        emit(MovieLoaded(movies));
+      } catch (e) {
+        emit(MovieError("Erro ao carregar filmes em breve"));
       }
     });
   }
 }
+

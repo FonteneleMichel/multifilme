@@ -5,14 +5,12 @@ class AppTheme {
     return ThemeData(
       scaffoldBackgroundColor: Colors.transparent,
 
-      // 🔥 Definir temas globais para textos
       textTheme: const TextTheme(
         bodyLarge: TextStyle(color: Colors.white),
         bodyMedium: TextStyle(color: Color(0xFFADADAD)),
         bodySmall: TextStyle(color: Colors.white70)
       ),
 
-      // 🔥 Definir temas globais para o AppBar
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
