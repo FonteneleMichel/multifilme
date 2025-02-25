@@ -15,15 +15,22 @@ class LanguageSelector extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Idioma",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+            const Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text(
+                "Idioma",
+                style: TextStyle(fontSize: 12, color: Colors.white),
+              ),
             ),
-            const SizedBox(height: 4),
             Row(
               children: [
-                const Icon(Icons.location_on, color: Colors.red),
-                const SizedBox(width: 8),
+                Image.asset(
+                  'assets/icon/location.png',
+                  width: 18,
+                  height: 18,
+                  color: Colors.white,
+                ),
+                const SizedBox(width: 4),
                 DropdownButton<Locale>(
                   value: languageProvider.locale,
                   dropdownColor: Colors.black,
@@ -49,10 +56,15 @@ class LanguageSelector extends StatelessWidget {
             ),
           ],
         ),
-        const CircleAvatar(
+
+        CircleAvatar(
           radius: 20,
           backgroundColor: Colors.transparent,
-          child: Icon(Icons.person, color: Colors.white),
+          child: Image.asset(
+            'assets/icon/profile-circle.png',
+            width: 42,
+            height: 42,
+          ),
         ),
       ],
     );
