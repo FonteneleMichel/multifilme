@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<MovieRepository>( // 🔥 Agora o MovieRepository está disponível globalmente
+    return Provider<MovieRepository>(
       create: (_) => repository,
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {

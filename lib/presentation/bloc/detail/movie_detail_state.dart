@@ -1,4 +1,4 @@
-import '../../domain/entities/movie_detail.dart';
+import '../../../domain/entities/movie_detail.dart';
 
 abstract class MovieDetailState {}
 
