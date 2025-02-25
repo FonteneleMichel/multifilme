@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             title: 'Filmes Populares',
             debugShowCheckedModeBanner: false,
-            theme: AppTheme.theme, // 🔥 Aplicando o tema global
+            theme: AppTheme.theme,
             supportedLocales: const [
               Locale('en', 'US'),
               Locale('pt', 'BR'),

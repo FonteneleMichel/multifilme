@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:multifilme/presentation/bloc/movie/movie_bloc.dart';
-import 'package:multifilme/presentation/bloc/movie/movie_state.dart';
 import 'package:multifilme/presentation/bloc/rated/top_rated_bloc.dart';
 import 'package:multifilme/presentation/bloc/rated/top_rated_state.dart';
 import '../../core/localization/app_localizations.dart';
+import '../bloc/movie/movie_bloc.dart';
+import '../bloc/movie/movie_event.dart';
+import '../bloc/movie/movie_state.dart';
+
 import '../widgets/language_selector.dart';
 
 class MovieListPage extends StatefulWidget {
@@ -17,6 +19,7 @@ class MovieListPage extends StatefulWidget {
 
 class _MovieListPageState extends State<MovieListPage> {
   int _currentIndex = 0;
+  String _selectedCategory = "Nos Cinemas";
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,6 @@ class _MovieListPageState extends State<MovieListPage> {
             child: LanguageSelector(),
           ),
 
-          // 🔥 Carrossel usando o novo Bloc
           BlocBuilder<TopRatedBloc, TopRatedState>(
             builder: (context, state) {
               if (state is TopRatedLoaded) {
@@ -67,7 +69,6 @@ class _MovieListPageState extends State<MovieListPage> {
                       }).toList(),
                     ),
 
-                    // 🔥 Indicadores do carrossel
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(state.movies.length, (index) {
@@ -84,43 +85,127 @@ class _MovieListPageState extends State<MovieListPage> {
                     ),
                   ],
                 );
-              } else if (state is TopRatedError) {
-                return Center(child: Text(state.message, style: const TextStyle(color: Colors.white)));
               }
               return const Center(child: CircularProgressIndicator());
             },
           ),
 
-          // 🔥 Lista de filmes usando o MovieBloc
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _selectedCategory = "Nos Cinemas";
+                      });
+                      context.read<MovieBloc>().add(FetchNowPlayingMovies());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _selectedCategory == "Nos Cinemas" ? Colors.red : Colors.grey,
+                    ),
+                    child: const Text("Nos Cinemas"),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _selectedCategory = "Em Breve";
+                      });
+                      context.read<MovieBloc>().add(FetchUpcomingMovies());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _selectedCategory == "Em Breve" ? Colors.red : Colors.grey,
+                    ),
+                    child: const Text("Em Breve"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           Expanded(
             child: BlocBuilder<MovieBloc, MovieState>(
               builder: (context, state) {
                 if (state is MovieLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is MovieLoaded) {
-                  return ListView.builder(
-                    itemCount: state.movies.length,
-                    itemBuilder: (context, index) {
-                      final movie = state.movies[index];
-                      return ListTile(
-                        leading: Image.network(
-                          'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                          width: 50,
-                          height: 75,
-                          fit: BoxFit.cover,
-                        ),
-                        title: Text(movie.title, style: Theme.of(context).textTheme.bodyLarge),
-                        subtitle: Text(movie.releaseDate ?? '', style: Theme.of(context).textTheme.bodyMedium),
-                      );
-                    },
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 160 / 280,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 16,
+                      ),
+                      itemCount: state.movies.length,
+                      itemBuilder: (context, index) {
+                        final movie = state.movies[index];
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                width: 160,
+                                height: 222,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+
+                            Text(
+                              movie.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+
+                            Row(
+                              children: [
+                                const Icon(Icons.star, color: Colors.amber, size: 16),
+                                const SizedBox(width: 4),
+                                Text(
+                                  movie.voteAverage.toStringAsFixed(1),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  "${movie.voteCount} votos",
+                                  style: const TextStyle(
+                                    color: Color(0xFFADADAD),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   );
-                } else if (state is MovieError) {
-                  return Center(child: Text(state.message, style: const TextStyle(color: Colors.white)));
                 }
                 return const Center(child: Text("Nenhum filme encontrado", style: TextStyle(color: Colors.white)));
               },
             ),
           ),
+
         ],
       ),
     );

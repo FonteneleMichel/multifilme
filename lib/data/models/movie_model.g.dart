@@ -13,6 +13,7 @@ MovieModel _$MovieModelFromJson(Map<String, dynamic> json) => MovieModel(
       posterPath: json['poster_path'] as String?,
       releaseDate: json['release_date'] as String?,
       voteAverage: (json['vote_average'] as num).toDouble(),
+      voteCount: (json['vote_count'] as num).toInt(),
     );
 
 Map<String, dynamic> _$MovieModelToJson(MovieModel instance) =>
@@ -23,16 +24,5 @@ Map<String, dynamic> _$MovieModelToJson(MovieModel instance) =>
       'poster_path': instance.posterPath,
       'release_date': instance.releaseDate,
       'vote_average': instance.voteAverage,
-    };
-
-MovieResponse _$MovieResponseFromJson(Map<String, dynamic> json) =>
-    MovieResponse(
-      results: (json['results'] as List<dynamic>)
-          .map((e) => MovieModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$MovieResponseToJson(MovieResponse instance) =>
-    <String, dynamic>{
-      'results': instance.results,
+      'vote_count': instance.voteCount,
     };

@@ -1,0 +1,2 @@
+C:/Users/MIchel Fontenele/AndroidStudioProjects/multifilme/android/app/.cxx/RelWithDebInfo/1c1t62e2/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/MIchel Fontenele/AndroidStudioProjects/multifilme/android/app/.cxx/RelWithDebInfo/1c1t62e2/arm64-v8a/CMakeFiles/rebuild_cache.dir

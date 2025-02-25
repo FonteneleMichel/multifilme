@@ -1,4 +1,4 @@
-import '../../data/models/movie_model.dart';
+import 'package:multifilme/data/models/movie_model.dart';
 
 class Movie {
   final int id;
@@ -7,6 +7,7 @@ class Movie {
   final String? posterPath;
   final String? releaseDate;
   final double voteAverage;
+  final int voteCount;
 
   Movie({
     required this.id,
@@ -15,6 +16,7 @@ class Movie {
     this.posterPath,
     this.releaseDate,
     required this.voteAverage,
+    required this.voteCount,
   });
 
   factory Movie.fromModel(MovieModel model) {
@@ -25,6 +27,7 @@ class Movie {
       posterPath: model.posterPath,
       releaseDate: model.releaseDate,
       voteAverage: model.voteAverage,
+      voteCount: model.voteCount,
     );
   }
 }
