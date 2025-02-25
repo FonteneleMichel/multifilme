@@ -1,3 +1,14 @@
-abstract class TopRatedEvent {}
+import 'package:equatable/equatable.dart';
 
-class FetchTopRatedMovies extends TopRatedEvent {}
+abstract class TopRatedEvent extends Equatable {
+  const TopRatedEvent();
+}
+
+class FetchTopRatedMovies extends TopRatedEvent {
+  final String language;
+
+  const FetchTopRatedMovies(this.language);
+
+  @override
+  List<Object> get props => [language];
+}

@@ -1,6 +1,10 @@
+import 'dart:ui';
+
 abstract class MovieDetailEvent {}
 
 class FetchMovieDetail extends MovieDetailEvent {
   final int movieId;
-  FetchMovieDetail(this.movieId);
+  final String language;
+
+  FetchMovieDetail(this.movieId, this.language);
 }

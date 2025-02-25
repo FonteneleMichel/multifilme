@@ -40,13 +40,15 @@ class MyApp extends StatelessWidget {
       create: (_) => repository,
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
+          final currentLanguage = languageProvider.locale.languageCode;
+
           return MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => MovieBloc(repository)..add(movie_events.FetchPopularMovies(1)),
+                create: (context) => MovieBloc(repository)..add(movie_events.FetchPopularMovies(currentLanguage)),
               ),
               BlocProvider(
-                create: (_) => TopRatedBloc(repository)..add(rated_events.FetchTopRatedMovies()),
+                create: (context) => TopRatedBloc(repository)..add(rated_events.FetchTopRatedMovies(currentLanguage)),
               ),
             ],
             child: MaterialApp(
@@ -76,4 +78,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

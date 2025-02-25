@@ -1,14 +1,32 @@
-abstract class MovieEvent {}
+import 'package:equatable/equatable.dart';
 
-class FetchPopularMovies extends MovieEvent {
-  final int page;
-
-  FetchPopularMovies(this.page);
+abstract class MovieEvent extends Equatable {
+  const MovieEvent();
 }
 
-class FetchTopRatedMovies extends MovieEvent {}
+class FetchNowPlayingMovies extends MovieEvent {
+  final String language; // Agora recebe o idioma como String
 
-class FetchNowPlayingMovies extends MovieEvent {}
+  const FetchNowPlayingMovies(this.language);
 
-class FetchUpcomingMovies extends MovieEvent {}
+  @override
+  List<Object> get props => [language];
+}
 
+class FetchUpcomingMovies extends MovieEvent {
+  final String language; // Agora recebe o idioma como String
+
+  const FetchUpcomingMovies(this.language);
+
+  @override
+  List<Object> get props => [language];
+}
+
+class FetchPopularMovies extends MovieEvent {
+  final String language; // Agora recebe o idioma como String
+
+  const FetchPopularMovies(this.language);
+
+  @override
+  List<Object> get props => [language];
+}
