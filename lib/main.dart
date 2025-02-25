@@ -12,6 +12,7 @@ import 'presentation/bloc/movie/movie_bloc.dart';
 import 'presentation/bloc/movie/movie_event.dart' as movie_events;
 import 'presentation/bloc/rated/top_rated_bloc.dart';
 import 'presentation/bloc/rated/top_rated_event.dart' as rated_events;
+import 'presentation/pages/movie_detail_page.dart';
 import 'presentation/pages/movie_list_page.dart';
 import 'presentation/widgets/background_container.dart';
 
@@ -35,38 +36,44 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LanguageProvider>(
-      builder: (context, languageProvider, child) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (_) => MovieBloc(repository)..add(movie_events.FetchPopularMovies(1)),
-            ),
-            BlocProvider(
-              create: (_) => TopRatedBloc(repository)..add(rated_events.FetchTopRatedMovies()),
-            ),
-          ],
-          child: MaterialApp(
-            title: 'Filmes Populares',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.theme,
-            supportedLocales: const [
-              Locale('en', 'US'),
-              Locale('pt', 'BR'),
+    return Provider<MovieRepository>( // 🔥 Agora o MovieRepository está disponível globalmente
+      create: (_) => repository,
+      child: Consumer<LanguageProvider>(
+        builder: (context, languageProvider, child) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => MovieBloc(repository)..add(movie_events.FetchPopularMovies(1)),
+              ),
+              BlocProvider(
+                create: (_) => TopRatedBloc(repository)..add(rated_events.FetchTopRatedMovies()),
+              ),
             ],
-            locale: languageProvider.locale,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            home: BackgroundContainer(
-              child: const MovieListPage(),
+            child: MaterialApp(
+              title: 'Filmes Populares',
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme.theme,
+              supportedLocales: const [
+                Locale('en', 'US'),
+                Locale('pt', 'BR'),
+              ],
+              locale: languageProvider.locale,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              initialRoute: '/',
+              routes: {
+                '/': (context) => const BackgroundContainer(child: MovieListPage()),
+                '/movieDetail': (context) => const MovieDetailPage(),
+              },
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
+

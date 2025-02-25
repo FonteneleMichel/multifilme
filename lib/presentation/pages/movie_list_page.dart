@@ -52,15 +52,24 @@ class _MovieListPageState extends State<MovieListPage> {
                       items: state.movies.map((movie) {
                         return Builder(
                           builder: (context) {
-                            return Container(
-                              width: 189,
-                              height: 276,
-                              margin: const EdgeInsets.symmetric(horizontal: 5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: NetworkImage('https://image.tmdb.org/t/p/w500${movie.posterPath}'),
-                                  fit: BoxFit.cover,
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/movieDetail',
+                                  arguments: movie.id,
+                                );
+                              },
+                              child: Container(
+                                width: 189,
+                                height: 276,
+                                margin: const EdgeInsets.symmetric(horizontal: 5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: NetworkImage('https://image.tmdb.org/t/p/w500${movie.posterPath}'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             );
@@ -144,60 +153,69 @@ class _MovieListPageState extends State<MovieListPage> {
                         mainAxisSpacing: 16,
                       ),
                       itemCount: state.movies.length,
-                      itemBuilder: (context, index) {
-                        final movie = state.movies[index];
+                        itemBuilder: (context, index) {
+                          final movie = state.movies[index];
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                                width: 160,
-                                height: 222,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-
-                            Text(
-                              movie.title,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-
-                            Row(
+                          return GestureDetector( // 🔥 Adicionando clique na lista de filmes
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/movieDetail', // 🔥 Nome da rota
+                                arguments: movie.id, // 🔥 Passando o ID do filme
+                              );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(Icons.star, color: Colors.amber, size: 16),
-                                const SizedBox(width: 4),
-                                Text(
-                                  movie.voteAverage.toStringAsFixed(1),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.network(
+                                    'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                    width: 160,
+                                    height: 222,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
+                                const SizedBox(height: 8),
+
                                 Text(
-                                  "${movie.voteCount} votos",
+                                  movie.title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
-                                    color: Color(0xFFADADAD),
-                                    fontSize: 12,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
                                   ),
+                                ),
+                                const SizedBox(height: 4),
+
+                                Row(
+                                  children: [
+                                    const Icon(Icons.star, color: Colors.amber, size: 16),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      movie.voteAverage.toStringAsFixed(1),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      "${movie.voteCount} votos",
+                                      style: const TextStyle(
+                                        color: Color(0xFFADADAD),
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        );
-                      },
+                          );
+                        },
                     ),
                   );
                 }
