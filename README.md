@@ -41,7 +41,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias e padrões:
 
 ### **1. Clonar o repositório**
 
-git clone https://github.com/seu-usuario/multifilme.git
+git clone https://github.com/FonteneleMichel/multifilme.git
 cd multifilme
 
 ### **2. Configurar as Dependências**
