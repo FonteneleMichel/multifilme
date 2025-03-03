@@ -1,6 +1,12 @@
 {
-  "app_title": "Filmes Populares",
-  "movies": "Filmes",
-  "error_loading_movies": "Erro ao carregar filmes",
-  "try_again": "Tentar novamente"
+  "trailer_not_available": "Trailer não disponível",
+  "year": "Ano",
+  "votes": "votos",
+  "genres": "Gêneros",
+  "summary": "Resumo",
+  "release_date": "Lançamento",
+  "origin": "Origem",
+  "budget": "Orçamento",
+  "unknown_budget": "Desconhecido",
+  "official_page": "Página Oficial"
 }

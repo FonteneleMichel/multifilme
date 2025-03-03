@@ -11,6 +11,10 @@ import 'package:provider/provider.dart';
 import 'package:multifilme/core/localization/language_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:multifilme/presentation/widgets/error_dialog.dart';
+import 'package:shimmer/shimmer.dart';
+
+import '../widgets/shimmer/shimmer_details.dart';
 
 class MovieDetailPage extends StatelessWidget {
   const MovieDetailPage({Key? key}) : super(key: key);
@@ -48,15 +52,14 @@ class MovieDetailPage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-
             BlocBuilder<MovieDetailBloc, MovieDetailState>(
               builder: (context, state) {
                 if (state is MovieDetailLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return ShimmerMovieDetail();
                 } else if (state is MovieDetailLoaded) {
                   final movie = state.movie;
                   String videoId = movie.trailerKey ?? "";
-                  bool hasTrailer = videoId.isNotEmpty && videoId.runtimeType == String;
+                  bool hasTrailer = videoId.isNotEmpty;
 
                   return Column(
                     children: [
@@ -90,7 +93,6 @@ class MovieDetailPage extends StatelessWidget {
                             ),
                           ),
                         ),
-
                       Expanded(
                         child: Stack(
                           children: [

@@ -140,6 +140,18 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "connectivity_plus",
+      "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/connectivity_plus-6.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "connectivity_plus_platform_interface",
+      "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/connectivity_plus_platform_interface-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "convert",
       "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.2",
       "packageUri": "lib/",
@@ -168,6 +180,12 @@
       "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/dartz-0.10.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "dbus",
+      "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/dbus-0.7.11",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "dio",
@@ -452,6 +470,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "nm",
+      "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/nm-0.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "package_config",
       "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/package_config-2.1.1",
       "packageUri": "lib/",
@@ -534,6 +558,12 @@
       "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/shelf_web_socket-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "3.3"
+    },
+    {
+      "name": "shimmer",
+      "rootUri": "file:///C:/Users/MIchel%20Fontenele/AppData/Local/Pub/Cache/hosted/pub.dev/shimmer-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "sky_engine",
@@ -716,7 +746,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2025-02-25T21:38:03.036531Z",
+  "generated": "2025-02-28T16:07:07.490272Z",
   "generator": "pub",
   "generatorVersion": "3.7.0",
   "flutterRoot": "file:///C:/flutter",
